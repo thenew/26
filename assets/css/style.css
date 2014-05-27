@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@charset "UTF-8";
 
 body {
     -webkit-perspective: 200;
@@ -9,5 +8,5 @@ body {
     width: 600px;
     height: auto;
     margin: 0 auto;
-    -webkit-transform: translateZ(-300px) rotateY(-15deg);
+    /*-webkit-transform: translateZ(-300px) rotateY(-15deg);*/
 }
