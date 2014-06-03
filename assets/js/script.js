@@ -1,4 +1,6 @@
+
 // polyfills
+
 (function() {
     var lastTime = 0;
     var vendors = ['webkit', 'moz'];
@@ -24,30 +26,75 @@
         };
 }());
 
-function frame() {
-  update();
-  render();
-  window.requestAnimationFrame(frame);
+function timestamp() {
+  return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 }
 
-document.addEventListener('DOMContentLoaded', function(){
-    window.requestAnimationFrame(frame);
-});
+// core
 
+var now = 0,
+    dt   = 0,
+    last = timestamp(),
+    step = 1/60;
+
+function frame() {
+    console.log(timestamp());
+  now = timestamp();
+  dt = dt + Math.min(1, (now - last) / 1000);
+  while(dt > step) {
+    dt = dt - step;
+    update(step);
+  }
+  render(dt);
+  last = now;
+  requestAnimationFrame(frame);
+}
+
+// start
+requestAnimationFrame(frame);
+
+// actions
 
 function render() {
-}
+    if(isGameOver) {
 
-function update() {
-    meterEl.innerHTML = stress;
-    cooldown++;
-    if(cooldown > 200 && stress > 0) {
-        stress--;
+    } else {
+        meterEl.innerHTML = stress;
     }
 }
 
+function update() {
+    cooldown++;
+    if(cooldown > 200 && stress > 0) {
+        stress--;
+    } else {
+        TweenLite.to(document.querySelector('#container .fail-slate'), 2, {'opacity': 1});
+    }
+
+    // stress
+    if(stress > 5000) {
+        gameOver(false);
+    }
+}
+
+function gameOver(success) {
+    isGameOver = true;
+    if(success) {
+        document.querySelector('#container').classList.add('game-over-victory');
+        alert('Victory');
+    } else {
+        document.querySelector('#container').classList.add('game-over-fail');
+        alert('game over');
+    }
+}
+
+setTimeout(function() {
+    gameOver(true);
+}, 26000);
 
     var stress = 0;
+    var isGameOver = false;
+
 
     var meterEl = document.querySelector('#js-meter');
       // stress++;

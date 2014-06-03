@@ -10,3 +10,26 @@ body {
     margin: 0 auto;
     /*-webkit-transform: translateZ(-300px) rotateY(-15deg);*/
 }
+
+#container {
+
+}
+
+#container .fail-slate,
+#container .game-over {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#container.game-over-fail .game-over {
+    background-color: #ff0000;
+}
+
+#container .fail-slate {
+    opacity: 0;
+    background-color: #ff0000;
+}
